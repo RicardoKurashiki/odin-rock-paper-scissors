@@ -1,0 +1,32 @@
+* {
+    font-family: Roboto, 'Open Sans', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 90vh;
+}
+
+#round-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#player-selection {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.button {
+    background-color: cadetblue;
+    color: white;
+    border-radius: 8px;
+    height: 40px;
+    width: 160px;
+    font-size: 16px;
+    font-weight: bold;
+}

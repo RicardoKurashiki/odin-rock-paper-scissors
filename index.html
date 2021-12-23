@@ -2,11 +2,22 @@
 
 <html>
     <head>
+        <title>Odin - Rock Paper Scissors</title>
         <meta charset="utf-8">
-        <title>Rock Paper Scissor</title>
+        <link rel="stylesheet" href="styles.css">
     </head>
-
+    
     <body>
-        <script src="script.js"></script>
+        <div id="round-result">
+            <h1>Select your play!</h1>
+            <h2 id="selection"></h2>
+            <p id="result"></p>
+        </div>
+        <div id="player-selection">
+            <button class="button" data-key="49">[1] Rock</button>
+            <button class="button" data-key="50">[2] Paper</button>
+            <button class="button" data-key="51">[3] Scissor</button>
+        </div>
+    <script src="script.js"></script>
     </body>
 </html>

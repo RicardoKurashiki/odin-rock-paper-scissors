@@ -3,40 +3,30 @@ let computerPoints = 0;
 let draws = 0;
 
 function playRound(playerSelection, computerSelection) {
-    console.log("Player chose: " + playerSelection);
-    console.log("Computer chose: " + computerSelection);
-
     if (computerSelection === playerSelection) {
-        console.log("Draw!");
         draws++;
         return;
     }
     if (playerSelection === "rock") {
         if (computerSelection === "scissor") {
-            console.log("Player wins!");
             playerPoints++;
         } else {
-            console.log("Computer wins!");
             computerPoints++;
         }
         return;
     }
     if (playerSelection === "paper") {
         if (computerSelection === "rock") {
-            console.log("Player wins!");
             playerPoints++;
         } else {
-            console.log("Computer wins!");
             computerPoints++;
         }
         return;
     }
     if (playerSelection === "scissor") {
         if (computerSelection === "paper") {
-            console.log("Player wins!");
             playerPoints++;
         } else {
-            console.log("Computer wins!");
             computerPoints++;
         }
         return;
@@ -54,30 +44,58 @@ function computerPlay() {
     }
 }
 
-function game() {
-    let remainingRounds = 1;
+function game(event) {
     let playerSelection = "rock";
     let computerSelection = "rock";
-    while (remainingRounds <= 5) {
-        console.log("Round " + remainingRounds.toString());
-        console.log("Player - Computer - Draws");
-        console.log(playerPoints.toString() + " - " + computerPoints.toString() + " - " + draws.toString());
-        playerSelection = prompt("Rock, paper or scissor?").toLowerCase().trim();
-        computerSelection = computerPlay();
-        playRound(playerSelection, computerSelection);
-        remainingRounds++;
+    let keyCode = 0;
+
+    
+    if (event.type === "keydown") {
+        keyCode = event.keyCode;
+    } else if (event.type === "click") {
+        keyCode = event.originalTarget.attributes[1].value;
     }
-    console.log("RESULTS:");
-    console.log("Player: " + playerPoints.toString());
-    console.log("Computer: " + computerPoints.toString());
-    console.log("Draws: " + draws.toString());
-    if (draws >= 3) {
-        console.log("IT'S A DRAW!!!");
-    } else if (playerPoints > computerPoints) {
-        console.log("PLAYER WINS!!!");
-    } else {
-        console.log("COMPUTER WINS!!!");
+
+    switch (keyCode.toString()) {
+        case "49":
+            playerSelection = "rock";
+            break;
+        case "50":
+            playerSelection = "paper";
+            break;
+        case "51":
+            playerSelection = "scissor";
+            break;
+        default:
+            return;
+    }
+
+    computerSelection = computerPlay();
+    playRound(playerSelection, computerSelection);
+
+    let selectionText = document.querySelector("#selection");
+    selectionText.textContent = `${playerSelection} vs ${computerSelection}`.toUpperCase();
+
+    let resultText = document.querySelector('#result');
+    resultText.textContent = `Player: ${playerPoints.toString()} - Computer: ${computerPoints.toString()} - Draws: ${draws.toString()}`;
+
+    if (playerPoints === 5) {
+        selectionText.textContent  = "PLAYER WINS!!";
+        resultText.textContent = "Play again by selecting a move";
+        playerPoints = 0;
+        computerPoints = 0;
+        draws = 0;
+    } else if (computerPoints === 5) {
+        selectionText.textContent = "COMPUTER WINS!!";
+        resultText.textContent = "Play again by selecting a move";
+        playerPoints = 0;
+        computerPoints = 0;
+        draws = 0;
     }
 }
 
-game();
+const buttons = document.querySelectorAll(".button");
+buttons.forEach(button => button.addEventListener('click', game));
+
+
+window.addEventListener('keydown', game);
